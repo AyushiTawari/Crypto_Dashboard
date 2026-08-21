@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  ingestion:
+    build:
+      context: .
+      dockerfile: ingestion/Dockerfile
+    env_file: .env
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  api:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    env_file: .env
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - ingestion
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
