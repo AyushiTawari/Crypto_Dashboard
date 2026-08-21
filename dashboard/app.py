@@ -151,14 +151,14 @@ table_rows = "".join(f'''
 
 page_html = f"""
 <style>
-  .top-row {{ display:flex; gap:20px; font-family:sans-serif; align-items:flex-start;margin-bottom:24px; }}
+  .top-row {{ display:flex; gap:20px; font-family:sans-serif; align-items:stretch; margin-bottom:24px; }}
   .kpi-col {{ display:flex; flex-direction:column; gap:14px; width:220px; flex-shrink:0; }}
   .kpi-card {{ background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:16px; aspect-ratio:1.6/1; display:flex; flex-direction:column; justify-content:center; }}
   .kpi-label {{ color:rgba(255,255,255,0.5); font-size:11px; text-transform:uppercase; }}
   .kpi-symbol {{ color:white; font-size:13px; margin-top:6px; }}
   .kpi-price {{ color:white; font-size:20px; font-weight:600; margin-top:4px; }}
   .kpi-change {{ font-size:12px; margin-left:6px; }}
-  .chart-col {{ flex:1; color:white; min-width:0; }}
+  .chart-col {{ flex:1; color:white; min-width:0; display:flex; flex-direction:column; }}
   .pos {{ color:#00d68f; }}
   .neg {{ color:#ff4d4d; }}
 </style>
@@ -188,7 +188,7 @@ page_html = f"""
       <div id="price" style="font-size:36px; font-weight:600;">--</div>
       <div id="change" style="font-size:16px;">--</div>
     </div>
-    <div id="chart" style="width:100%; height:340px; margin-top:12px;"></div>
+    <div id="chart" style="width:100%; height:100%; margin-top:12px;"></div>
   </div>
 </div>
 
@@ -307,11 +307,11 @@ page_html = f"""
 </script>
 """
 
-components.html(page_html, height=420)
+components.html(page_html, height=485)
 
 symbol_options = [""] + symbols
 selected_symbol = st.selectbox(
-    "Search symbol",
+    "Search",
     options=symbol_options,
     format_func=lambda x: "Type to search..." if x == "" else x.upper(),
 )
